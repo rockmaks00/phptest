@@ -4,7 +4,7 @@ class DB {
     const PASSWORD = "postgres";
     const HOST = "localhost";
     const PORT = "5432";
-    const DB_NAME = "phptest";
+    const DB_NAME = "taskmanager";
 
     public static function db_connect() {
         $user = self::USER;

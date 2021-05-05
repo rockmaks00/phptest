@@ -1,10 +1,10 @@
 <?php
-class IndexController extends Controller {
-    private string $template = "main.view.php";
+class LoginController extends Controller {
+    private string $template = "login.view.php";
 
     public function __construct() {
         parent::__construct();
-        $this->model = new Model();
+        $this->model = new UserModel();
     }
 
     public function index() {
