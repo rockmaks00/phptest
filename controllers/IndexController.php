@@ -4,10 +4,16 @@ class IndexController extends Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->model = new Model();
+        require_once MODEL_PATH . 'TaskModel.php';
+        $this->model = new TaskModel();
     }
 
     public function index() {
         $this->view->render($this->template);
+    }
+
+    public function create_task() {
+        $this->model->create_task($_GET["task-username"], $_GET["task-email"], $_GET["task-text"]);
+        header("Location: /");
     }
 }

@@ -5,20 +5,19 @@ class Router
 
     private function __construct() {}
     private function __clone() {}
-    // callback-function or string:ControllerName@FunctionName
+
     public static function route($pattern, $callback)
     {
-        $pattern = '/^' . str_replace('/', '\/', $pattern) . '$/';
         self::$routes[$pattern] = $callback;
     }
 
     public static function execute($url)
     {
+        $url = explode("?", $url);
         foreach (self::$routes as $pattern => $callback)
         {
-            if (preg_match($pattern, $url, $params))
+            if (strpos($pattern, $url[0]) !== false)
             {
-                array_shift($params);
                 if(is_string($callback)) {
                     $callback_split = explode("@", $callback);
                     $controller_name = $callback_split[0];
@@ -27,9 +26,9 @@ class Router
                     $controller = new $controller_name();
                     return $controller->$action();
                 }
-                return call_user_func_array($callback, array_values($params));
+                return call_user_func($callback);
             }
         }
-        throw new Exception("404 Not Founded");
+        throw new Exception("404");
     }
 }

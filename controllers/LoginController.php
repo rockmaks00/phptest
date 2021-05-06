@@ -6,8 +6,4 @@ class LoginController extends Controller {
         parent::__construct();
         $this->model = new UserModel();
     }
-
-    public function index() {
-        $this->view->render($this->template);
-    }
 }
