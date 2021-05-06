@@ -13,15 +13,18 @@
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Задачник</a>
-            <form class="d-flex" method="post">
-                <input class="form-control me-2" type="email" placeholder="E-Mail" name="login-email">
-                <input class="form-control me-2" type="password" placeholder="Пароль" name="login-pass">
-                <button class="btn btn-outline-light" type="submit">Войти</button>
-            </form>
+            <?php
+                if(isset($_SESSION["is_auth"])) {
+                    print_r($_SESSION);
+                    echo "<span class='navbar-text'>Вы вошли как <span class='text-light'></span></span>";
+                }
+                else
+                    include_once VIEW_PATH . "login.layout.php";
+            ?>
         </div>
     </nav>
 </header>
-<main">
+<main>
     <form class="container" action="/create" method="get">
         <div class="row">
             <div class="col-8 mx-auto">
@@ -32,7 +35,7 @@
                     </div>
                     <div class="col-6">
                         <label for="task-name">Имя</label>
-                        <input class="form-control" id="task-name" name="task-name" type="text" placeholder="Алексей">
+                        <input class="form-control" id="task-name" name="task-username" type="text" placeholder="Алексей">
                     </div>
                 </div>
                 <div class="row">
@@ -51,13 +54,44 @@
     <section class="container">
         <div class="row">
             <div class="col-8 mx-auto">
-                <nav aria-label="Page navigation example">
+                <nav>
                     <ul class="pagination">
-                        <li class="page-item"><a class="page-link text-light bg-dark" href="#">Назад</a></li>
-                        <li class="page-item"><a class="page-link text-light bg-dark" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link text-light bg-dark" href="#">Вперед</a></li>
+<!--                        <li class="page-item"><a class="page-link text-light bg-dark" href="#">Назад</a></li>-->
+                        <?php
+                            for($i = 1; $i < $page_data["pages_count"] + 1; $i++)
+                                echo "<li class='page-item'><a class='page-link text-light bg-dark' href='/?page=$i'>$i</a></li>";
+                        ?>
+<!--                        <li class="page-item"><a class="page-link text-light bg-dark" href="#">Вперед</a></li>-->
                     </ul>
                 </nav>
+            </div>
+        </div>
+    </section>
+    <section class="container">
+        <div class="row">
+            <div class="col-8 mx-auto">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Имя</th>
+                        <th scope="col">E-Mail</th>
+                        <th scope="col">Текст</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                        foreach ($page_data["tasks"] as $task) {
+                            $id = $task['id'];
+                            $username = $task['username'];
+                            $email = $task['email'];
+                            $text = $task['text'];
+                            //$
+                            echo "<tr><th scope='row'>$id</th><td>$username</td><td>$email</td><td>$text</td></tr>";
+                        }
+                    ?>
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>

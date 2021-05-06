@@ -9,11 +9,25 @@ class IndexController extends Controller {
     }
 
     public function index() {
-        $this->view->render($this->template);
+        $tasks_count = $this->model->tasks_count();
+        $pages_count = ceil($tasks_count / TASKS_PER_PAGE);
+        $current_page = $_GET['page'];
+        if(empty($current_page) || $current_page < 1 || $current_page > $pages_count) {
+            $current_page = 1;
+        }
+        $start = ($current_page - 1) * TASKS_PER_PAGE;
+        $page_data = array(
+            "pages_count" => $pages_count,
+            "tasks" => $this->model->get_tasks($start, TASKS_PER_PAGE, "2")
+        );
+        $this->view->render($this->template, $page_data);
     }
 
     public function create_task() {
-        $this->model->create_task($_GET["task-username"], $_GET["task-email"], $_GET["task-text"]);
+        $username = $_GET["task-username"];
+        $email = $_GET["task-email"];
+        $text = $_GET["task-text"];
+        $this->model->create_task($username, $email, $text);
         header("Location: /");
     }
 }

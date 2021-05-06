@@ -5,6 +5,7 @@ const CONTROLLER_PATH = ROOT . "/controllers/";
 const MODEL_PATH = ROOT . "/models/";
 const VIEW_PATH = ROOT . "/views/";
 const ROUTE_PATH = ROOT . "/routes/";
+const TASKS_PER_PAGE = 3;
 
 require_once "db.php";
 require_once MODEL_PATH . 'Model.php';

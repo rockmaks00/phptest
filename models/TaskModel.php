@@ -2,12 +2,26 @@
 class TaskModel extends Model {
     public function create_task($username, $email, $text) {
         $query = "INSERT INTO public.tasks (username, email, text) VALUES ($1, $2, $3);";
-        pg_query_params($this->db, $query, array($username, $email, $text));
+        $this->query($query, array($username, $email, $text));
     }
     public function edit_task($task_id, $new_text) {
 
     }
     public function mark_task($task_id, $new_status) {
 
+    }
+
+    public function tasks_count() {
+        $query = "SELECT COUNT(*) FROM public.tasks";
+        return $this->query($query)[0]["count"];
+    }
+
+    public function get_tasks($start, $count, $order_by = null) {
+        if(empty($order_by)) {
+            $order_by = "id DESC";
+        }
+        print_r($order_by);
+        $query = "SELECT * FROM public.tasks ORDER BY $1 LIMIT $2 OFFSET $3;";
+        return $this->query($query, array($order_by, $count, $start));
     }
 }
