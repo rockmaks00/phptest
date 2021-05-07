@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" href="resources/css/bootstrap.min.css">
     <link rel="stylesheet" href="resources/css/style.css">
-    <title>Document</title>
+    <title>TaskManager</title>
 </head>
 <body>
 <header>
@@ -14,12 +14,7 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Задачник</a>
             <?php
-                if(isset($_SESSION["is_auth"])) {
-                    print_r($_SESSION);
-                    echo "<span class='navbar-text'>Вы вошли как <span class='text-light'></span></span>";
-                }
-                else
-                    include_once VIEW_PATH . "login.layout.php";
+            include_once VIEW_PATH . "login.layout.php";
             ?>
         </div>
     </nav>
@@ -33,7 +28,7 @@
                         <label for="task-email">E-Mail</label>
                         <input class="form-control" id="task-email" name="task-email" type="email" placeholder="example@gmail.com">
                     </div>
-                    <div class="col-6">
+                    <div class="col-6 form-group">
                         <label for="task-name">Имя</label>
                         <input class="form-control" id="task-name" name="task-username" type="text" placeholder="Алексей">
                     </div>
@@ -54,23 +49,22 @@
     <section class="container">
         <div class="row">
             <div class="col-8 mx-auto">
+                <div>
+                    <span>Сортировать по:</span>
+                    <?php
+                    include_once VIEW_PATH . "sort.layout.php";
+                    ?>
+                </div>
                 <nav>
-                    <ul class="pagination">
+                    <ul class="mt-2 pagination">
 <!--                        <li class="page-item"><a class="page-link text-light bg-dark" href="#">Назад</a></li>-->
                         <?php
-                            for($i = 1; $i < $page_data["pages_count"] + 1; $i++)
-                                echo "<li class='page-item'><a class='page-link text-light bg-dark' href='/?page=$i'>$i</a></li>";
+                        include_once VIEW_PATH . "pagination.layout.php";
                         ?>
 <!--                        <li class="page-item"><a class="page-link text-light bg-dark" href="#">Вперед</a></li>-->
                     </ul>
                 </nav>
-            </div>
-        </div>
-    </section>
-    <section class="container">
-        <div class="row">
-            <div class="col-8 mx-auto">
-                <table class="table">
+                <table class="table table-hover">
                     <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -81,14 +75,7 @@
                     </thead>
                     <tbody>
                     <?php
-                        foreach ($page_data["tasks"] as $task) {
-                            $id = $task['id'];
-                            $username = $task['username'];
-                            $email = $task['email'];
-                            $text = $task['text'];
-                            //$
-                            echo "<tr><th scope='row'>$id</th><td>$username</td><td>$email</td><td>$text</td></tr>";
-                        }
+                    include_once VIEW_PATH . "table.layout.php";
                     ?>
                     </tbody>
                 </table>
@@ -96,8 +83,45 @@
         </div>
     </section>
 </main>
-<footer>
-
+<footer class="pt-5 text-muted text-center text-small">
+    <hr>
+    <p class="mb-1">© 2021 какой то копирайт</p>
+    <ul class="list-inline">
+        <li class="list-inline-item"><a href="https://github.com/rockmaks00/phptest">GitHub</a></li>
+    </ul>
 </footer>
+<div class="modal" id="edit-modal" style="display: block;" tabindex="-1">
+    <div class="modal-dialog">
+        <form class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Изменить задачу</h5>
+                <button type="button" class="btn-close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="edit-id">id</label>
+                    <input class="form-control" id="id-email" name="id-email" type="text" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="edit-email">E-Mail</label>
+                    <input class="form-control" id="edit-email" name="edit-email" type="email" placeholder="example@gmail.com">
+                </div>
+                <div class="form-group">
+                    <label for="edit-name">Имя</label>
+                    <input class="form-control" id="edit-name" name="edit-username" type="text" placeholder="Алексей">
+                </div>
+                <div class="form-group">
+                    <label for="edit-text">Описание задачи</label>
+                    <textarea class="form-control" id="task-text" name="task-text" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark">Отмена</button>
+                <button type="button" class="btn btn-success">Изменить</button>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
+<script src="resources/js/main.js"></script>
 </html>

@@ -20,8 +20,8 @@ class TaskModel extends Model {
         if(empty($order_by)) {
             $order_by = "id DESC";
         }
-        print_r($order_by);
-        $query = "SELECT * FROM public.tasks ORDER BY $1 LIMIT $2 OFFSET $3;";
-        return $this->query($query, array($order_by, $count, $start));
+        //почему то pg_query_params не работает с ORDER BY
+        $query = "SELECT * FROM public.tasks ORDER BY $order_by LIMIT $count OFFSET $start;";
+        return $this->query($query);
     }
 }

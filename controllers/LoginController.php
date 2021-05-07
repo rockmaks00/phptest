@@ -6,22 +6,19 @@ class LoginController extends Controller {
         $this->model = new UserModel();
     }
 
-    public function login(): bool
+    public function login()
     {
-        session_start();
         $email = $_POST["login-email"];
         $password = $_POST["login-pass"];
         //по хорошему надо хешировать
         $result = $this->model->login($email, $password);
         //по хорошему надо давать токен
-        print_r($result["row"][0]);
         if(is_array($result)) {
-//            $_SESSION["is_auth"] = True;
-//            $_SESSION["name"] = $result["row"][1];
-//            $_SESSION["is_admin"] = $result["row"][1];
-            return True;
+            $is_admin = $result[0]["is_admin"] == "t";
+            $_SESSION["username"] = $result[0]["name"];
+            $_SESSION["is_admin"] = $is_admin;
         }
-        return False;
+        header("Location: /");
     }
 
     public function logout() {

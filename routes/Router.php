@@ -1,7 +1,7 @@
 <?php
 class Router
 {
-    private static $routes = array();
+    private static array $routes = array();
 
     private function __construct() {}
     private function __clone() {}
@@ -22,13 +22,14 @@ class Router
                     $callback_split = explode("@", $callback);
                     $controller_name = $callback_split[0];
                     $action = $callback_split[1];
-                    require_once CONTROLLER_PATH . $controller_name . ".php";
+                    require_once CONTROLLER_PATH . "$controller_name.php";
                     $controller = new $controller_name();
                     return $controller->$action();
                 }
                 return call_user_func($callback);
             }
         }
-        throw new Exception("404");
+        //временно для отладки
+        throw new Exception("not found");
     }
 }

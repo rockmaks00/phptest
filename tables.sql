@@ -5,7 +5,7 @@ create table tasks
             primary key,
     username    varchar(20)           not null,
     email   varchar(100)          not null,
-    text    text                  not null,
+    text    varchar(255)          not null,
     changed boolean default false not null,
     status  boolean default false not null
 );
@@ -17,6 +17,6 @@ create table users
             primary key,
     name     varchar(20)  not null,
     email    varchar(100) not null,
-    password varchar(256) not null,
+    password varchar(255) not null,
     is_admin boolean default false not null
 );

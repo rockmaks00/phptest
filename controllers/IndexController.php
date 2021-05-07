@@ -18,7 +18,8 @@ class IndexController extends Controller {
         $start = ($current_page - 1) * TASKS_PER_PAGE;
         $page_data = array(
             "pages_count" => $pages_count,
-            "tasks" => $this->model->get_tasks($start, TASKS_PER_PAGE, "2")
+            "tasks" => $this->model->get_tasks($start, TASKS_PER_PAGE, SORT_LIST[$_GET['sort']]),
+            "is_admin" => $_SESSION["is_admin"]
         );
         $this->view->render($this->template, $page_data);
     }
