@@ -31,4 +31,13 @@ class IndexController extends Controller {
         $this->model->create_task($username, $email, $text);
         header("Location: /");
     }
+
+    public function edit_task() {
+        if($_SESSION["is_admin"]) {
+            $id = $_POST["edit-id"];
+            $text = $_POST["edit-text"];
+            print_r($_POST);
+            $this->model->edit_task($id, $text);
+        }
+    }
 }

@@ -90,38 +90,9 @@
         <li class="list-inline-item"><a href="https://github.com/rockmaks00/phptest">GitHub</a></li>
     </ul>
 </footer>
-<div class="modal" id="edit-modal" style="display: block;" tabindex="-1">
-    <div class="modal-dialog">
-        <form class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Изменить задачу</h5>
-                <button type="button" class="btn-close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="edit-id">id</label>
-                    <input class="form-control" id="id-email" name="id-email" type="text" disabled>
-                </div>
-                <div class="form-group">
-                    <label for="edit-email">E-Mail</label>
-                    <input class="form-control" id="edit-email" name="edit-email" type="email" placeholder="example@gmail.com">
-                </div>
-                <div class="form-group">
-                    <label for="edit-name">Имя</label>
-                    <input class="form-control" id="edit-name" name="edit-username" type="text" placeholder="Алексей">
-                </div>
-                <div class="form-group">
-                    <label for="edit-text">Описание задачи</label>
-                    <textarea class="form-control" id="task-text" name="task-text" rows="3"></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-dark">Отмена</button>
-                <button type="button" class="btn btn-success">Изменить</button>
-            </div>
-        </form>
-    </div>
-</div>
+<?php
+include_once VIEW_PATH . "edit.layout.php";
+?>
 </body>
 <script src="resources/js/main.js"></script>
 </html>

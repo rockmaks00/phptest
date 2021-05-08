@@ -5,8 +5,11 @@ class TaskModel extends Model {
         $this->query($query, array($username, $email, $text));
     }
     public function edit_task($task_id, $new_text) {
-
+        $query = "UPDATE public.tasks SET text = $1, changed = true WHERE id=$2;";
+        print_r($task_id);
+        $this->query($query, array($new_text, $task_id));
     }
+
     public function mark_task($task_id, $new_status) {
 
     }
